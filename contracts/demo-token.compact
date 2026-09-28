@@ -1,0 +1,26 @@
+pragma language_version >= 0.23;
+import CompactStandardLibrary;
+
+// A zero-value demonstration asset. Each deployment has a distinct token color.
+export ledger owner: Bytes<32>;
+export ledger token: Bytes<32>;
+export ledger minted: Boolean;
+witness issuerSecret(): Bytes<32>;
+
+constructor() {
+  owner = disclose(persistentHash<Bytes<32>>(issuerSecret()));
+  minted = false;
+}
+
+export circuit mint(): [] {
+  assert(persistentHash<Bytes<32>>(issuerSecret()) == owner, "Issuer only");
+  assert(!minted, "Demo supply already minted");
+  const coin = mintShieldedToken(
+    pad(32, "nocturne:demo:v1"),
+    1000000,
+    pad(32, "nocturne:single-mint"),
+    left<ZswapCoinPublicKey, ContractAddress>(ownPublicKey())
+  );
+  token = disclose(coin.color);
+  minted = true;
+}
