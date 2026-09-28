@@ -7,6 +7,7 @@ The verified local flow is employer input, compiled Compact circuit execution, p
 | Compact compile | Passed | Generated contract, ZKIR, `pay.prover` and `pay.verifier` in managed/payroll |
 | Contract/application tests | 29 passed | [Captured output](evidence/tests.txt) |
 | TypeScript and production build | Passed | `npm run build` |
+| Production deployment | Passed | [Vercel live demo](https://nocturne-tau-steel.vercel.app); app and public proving artifacts return HTTP 200 |
 | Desktop UI | Passed | [Screenshot](evidence/desktop.png) |
 | Mobile UI | Passed at 390 x 844 | [Full-page screenshot](evidence/mobile.png); document width does not exceed viewport |
 | Browser circuit execution | Passed | Real generated circuit reports local success; repeated runs update batch count |

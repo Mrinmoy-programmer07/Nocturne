@@ -8,7 +8,7 @@
 
 ## Live Demo
 
-Public demo: deployment URL is recorded here after the production deploy.
+Public demo: [nocturne-tau-steel.vercel.app](https://nocturne-tau-steel.vercel.app)
 
 The **Payroll** view executes the compiled circuit with synthetic coins and clearly marks receipts as unsettled. **Preprod payments** connects a DApp Connector v4 wallet, stores employer state encrypted in IndexedDB, obtains proving through the wallet, balances and submits transactions through the wallet, and shows settlement only after indexer confirmation.
 

@@ -23,7 +23,7 @@
 - [ ] Verify wallet connect, fund, prove, submit, confirm and recipient spend end to end.
 - [x] Create a public GitHub repository and push the project.
 - [x] Record passing GitHub Actions runs and add the real CI badge.
-- [ ] Publish and browser-check the live demo.
+- [x] Publish and browser-check the [live demo](https://nocturne-tau-steel.vercel.app).
 - [x] Capture local test output evidence: [screenshot](evidence/test-output.png) and [log](evidence/tests.txt).
 - [ ] Record the one-minute end-to-end network demo after integration.
 - [ ] Owner reviews and submits PROPOSAL.md; organizer approves it.
