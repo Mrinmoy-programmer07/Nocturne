@@ -4,12 +4,13 @@ import { fileURLToPath } from "node:url";
 const cwd = fileURLToPath(new URL("../", import.meta.url));
 if (process.argv.slice(2).some((arg) => arg !== "--skip-zk"))
   throw new Error("Unsupported compiler option");
+for (const name of ["payroll", "demo-token"]) {
 const args = [
   "compile",
   "+0.31.1",
   ...process.argv.slice(2),
-  "contracts/payroll.compact",
-  "managed/payroll",
+  `contracts/${name}.compact`,
+  `managed/${name}`,
 ];
 // Windows compact.exe is an unrelated OS utility. Always use WSL here.
 const result =
@@ -21,4 +22,5 @@ const result =
       )
     : spawnSync("compact", args, { cwd, stdio: "inherit" });
 if (result.error) console.error(result.error.message);
-process.exit(result.status ?? 1);
+if (result.status !== 0) process.exit(result.status ?? 1);
+}

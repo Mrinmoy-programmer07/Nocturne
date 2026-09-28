@@ -12,7 +12,7 @@
     "compile:fast": "node scripts/compile.mjs --skip-zk",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "build": "npm run typecheck && vite build",
+    "build": "node scripts/copy-artifacts.mjs && npm run typecheck && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "check": "npm run compile && npm test && npm run build"
   },
@@ -21,19 +21,34 @@
     "@fontsource/manrope": "5.3.0",
     "@midnight-ntwrk/compact-runtime": "0.16.0",
     "@midnight-ntwrk/dapp-connector-api": "4.0.1",
+    "@midnight-ntwrk/midnight-js-contracts": "4.1.1",
+    "@midnight-ntwrk/midnight-js-fetch-zk-config-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-network-id": "4.1.1",
+    "@midnight-ntwrk/midnight-js-protocol": "4.1.1",
+    "@midnight-ntwrk/midnight-js-types": "4.1.1",
+    "@midnight-ntwrk/midnight-js-utils": "4.1.1",
+    "@midnight-ntwrk/wallet-sdk-address-format": "3.1.2",
     "buffer": "6.0.3",
     "lucide-react": "1.48.0",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@midnight-ntwrk/testkit-js": "4.1.1",
     "@types/node": "26.6.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.1",
+    "tsx": "4.23.15",
     "typescript": "7.0.2",
     "vite": "8.3.1",
     "vite-plugin-wasm": "3.6.0",
     "vitest": "5.0.2"
+  },
+  "overrides": {
+    "@midnight-ntwrk/onchain-runtime-v3": "3.0.0"
   }
 }
