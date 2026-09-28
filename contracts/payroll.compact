@@ -1,0 +1,49 @@
+// Nocturne: one employer, two recipients, one atomic shielded split.
+// PUBLIC: owner commitment, accepted token color, batch IDs and batch count.
+// PRIVATE: employer secret, funding coin, recipient keys and payout amounts.
+// Circuit execution is not proof verification: the ledger must validate the
+// funding input and shielded outputs before a payment can be called settled.
+pragma language_version >= 0.23;
+import CompactStandardLibrary;
+
+export ledger owner: Bytes<32>;
+export ledger asset: Bytes<32>;
+export ledger batches: Set<Bytes<32>>;
+export ledger batchCount: Counter;
+
+witness employerSecret(): Bytes<32>;
+witness fundingCoin(): ShieldedCoinInfo;
+witness recipients(): Vector<2, ZswapCoinPublicKey>;
+witness amounts(): Vector<2, Uint<64>>;
+
+constructor(token: Bytes<32>) {
+  owner = disclose(persistentHash<Bytes<32>>(employerSecret()));
+  asset = disclose(token);
+}
+
+export circuit pay(batchId: Bytes<32>): [] {
+  assert(persistentHash<Bytes<32>>(employerSecret()) == owner,
+         "Only the employer can authorize payroll");
+  assert(!batches.member(disclose(batchId)), "Batch already paid");
+  const coin = fundingCoin();
+  const payees = recipients();
+  const values = amounts();
+  assert(coin.color == asset, "Wrong payroll asset");
+  assert(values[0] > 0 && values[1] > 0, "Payments must be positive");
+  assert(payees[0] != payees[1], "Recipients must be distinct");
+  assert(coin.value == (values[0] as Uint<128>) + (values[1] as Uint<128>),
+         "Funding must exactly equal the split");
+
+  // disclose here acknowledges commitment/nullifier links and change-branch
+  // leakage from the standard library; it does not store raw values in ledger.
+  receiveShielded(disclose(coin));
+  const first = sendImmediateShielded(disclose(coin),
+    left<ZswapCoinPublicKey, ContractAddress>(disclose(payees[0])), disclose(values[0]));
+  assert(first.change.is_some, "Second payment requires change");
+  const second = sendImmediateShielded(disclose(first.change.value),
+    left<ZswapCoinPublicKey, ContractAddress>(disclose(payees[1])), disclose(values[1]));
+  assert(!second.change.is_some, "No payroll funds may remain");
+
+  batches.insert(disclose(batchId));
+  batchCount.increment(1);
+}
