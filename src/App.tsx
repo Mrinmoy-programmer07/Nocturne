@@ -1,4 +1,5 @@
-import { useRef, useState, type FormEvent } from "react";
+import { lazy, Suspense, useRef, useState, type FormEvent } from "react";
+import { useMidnight } from "./hooks/useMidnight";
 import type { CircuitContext } from "@midnight-ntwrk/compact-runtime";
 import type { PayrollPrivateState, runLocalPayroll } from "./lib/contract";
 import { randomBytes, validateSplit } from "./lib/payroll";
@@ -19,10 +20,13 @@ import {
 } from "lucide-react";
 
 type Receipt = ReturnType<typeof runLocalPayroll>["receipt"];
-type View = "workspace" | "observer";
+type View = "workspace" | "observer" | "network";
+const NetworkPayroll = lazy(() => import("./components/NetworkPayroll"));
 const sampleKeys: [string, string] = ["11".repeat(32), "22".repeat(32)];
 
 export default function App() {
+  const wallet = useMidnight();
+  const [networkBusy, setNetworkBusy] = useState(false);
   const [view, setView] = useState<View>("workspace");
   const [keys, setKeys] = useState<[string, string]>(sampleKeys);
   const [amounts, setAmounts] = useState<[string, string]>(["600", "400"]);
@@ -122,6 +126,7 @@ export default function App() {
         <div className="workspace-label">YOUR WORKSPACE</div>
         <nav aria-label="Workspace">
           <button
+            disabled={networkBusy}
             className={view === "workspace" ? "nav-item active" : "nav-item"}
             onClick={() => setView("workspace")}
           >
@@ -129,6 +134,7 @@ export default function App() {
             <span className="nav-count">02</span>
           </button>
           <button
+            disabled={networkBusy}
             className={view === "observer" ? "nav-item active" : "nav-item"}
             onClick={() => {
               setVisible(false);
@@ -137,6 +143,7 @@ export default function App() {
           >
             <Eye size={18} /> Public observer
           </button>
+          <button disabled={networkBusy} className={view === "network" ? "nav-item active" : "nav-item"} onClick={() => setView("network")}><LockKeyhole size={18} /> Preprod payments</button>
           <a className="nav-item" href="#activity">
             <ArrowUpRight size={18} /> Batch activity
           </a>
@@ -179,7 +186,7 @@ export default function App() {
             <span className="network">
               <i /> Preprod target
             </span>
-            <WalletConnect />
+            <WalletConnect wallet={wallet} disabled={networkBusy} />
           </div>
         </header>
         <main>
@@ -187,12 +194,12 @@ export default function App() {
             <div>
               <div className="eyebrow">PRIVATE PAYROLL / SPLITS</div>
               <h1>
-                {view === "workspace"
+                {view === "network" ? "Send a shielded payroll split." : view === "workspace"
                   ? "Split payroll. Keep amounts private."
                   : "Inspect the public receipt."}
               </h1>
               <p>
-                {view === "workspace"
+                {view === "network" ? "Deploy your payroll contract, prepare two recipients, and confirm payment on Preprod." : view === "workspace"
                   ? "Prepare a two-recipient split and check it against the Midnight contract."
                   : "Batch IDs and execution results, with no salaries or recipient keys."}
               </p>
@@ -202,6 +209,7 @@ export default function App() {
             </span>
           </div>
 
+          {view === "network" ? <Suspense fallback={<p role="status">Loading payments...</p>}><NetworkPayroll key={wallet.address} wallet={wallet} onBusy={setNetworkBusy} /></Suspense> : <>
           <div className="notice">
             <Info size={16} />
             <p>
@@ -540,6 +548,7 @@ export default function App() {
               </div>
             )}
           </section>
+          </>}
           <footer>
             <span>
               <Moon size={14} /> Nocturne / Private Payroll & Splits
