@@ -76,6 +76,8 @@ wsl -d Ubuntu -- bash -lc "compact update 0.31.1 --no-set-default"
 
 `npm run compile` automatically uses WSL on Windows. On Linux/macOS it invokes `compact` directly. The compiler emits `managed/payroll/contract`, `zkir`, and `keys`. Generated artifacts are ignored by Git and regenerated in CI. `npm run compile:fast` skips proving-key generation for iteration only; it is not the release check.
 
+For a CLI Preprod deployment, start proof server 8.1.0 on port 6300, fund the generated address with test NIGHT, then run `npm run deploy:preprod`. The ignored `.private/` directory holds the deployment wallet and resulting public addresses. Never commit or share its wallet file.
+
 ```sh
 npm run build
 npm run preview
