@@ -59,5 +59,5 @@ export function useMidnight() {
     // settings to revoke the wallet's remembered authorization as well.
   }
 
-  return { address, busy, error, connect, disconnect };
+  return { address, busy, error, connect, disconnect, api };
 }
