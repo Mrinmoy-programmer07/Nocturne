@@ -16,7 +16,7 @@ The **Payroll** view executes the compiled circuit with synthetic coins and clea
 
 | Network | Address |
 | --- | --- |
-| Preprod | User-deployed from the live app. No canonical address is claimed until funded end-to-end verification is complete. |
+| Preprod | [6c521b3c137c8f4bcce120c2935127992d88debda5a47f76b5914c4cd363279c](https://explorer.1am.xyz/contract/6c521b3c137c8f4bcce120c2935127992d88debda5a47f76b5914c4cd363279c) |
 
 ## What This Does
 

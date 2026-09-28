@@ -1,11 +1,23 @@
 import { MidnightBech32m, ShieldedAddress } from "@midnight-ntwrk/wallet-sdk-address-format";
 import { validateSplit } from "./payroll";
 
+// @ts-ignore
+import { bech32m } from "@scure/base";
+
 export function decodeRecipient(value: string) {
   try {
-    const address = MidnightBech32m.parse(value.trim()).decode(ShieldedAddress, "preprod");
-    return { coinKey: address.coinPublicKey.toHexString(), encryptionKey: address.encryptionPublicKey.toHexString() };
-  } catch {
+    const val = value.trim();
+    const parsed = bech32m.decodeToBytes(val, false);
+    if (parsed.prefix !== "mn_shield-addr_preprod" && parsed.prefix !== "mn_shield-addr_testnet") {
+      throw new Error(`Invalid prefix: ${parsed.prefix}`);
+    }
+    if (parsed.bytes.length < 64) throw new Error("Invalid address length.");
+    const toHex = (arr: Uint8Array) => Array.from(arr).map(b => b.toString(16).padStart(2, "0")).join("");
+    return { 
+      coinKey: toHex(parsed.bytes.slice(0, 32)), 
+      encryptionKey: toHex(parsed.bytes.slice(32, 64)) 
+    };
+  } catch (err: any) {
     throw new Error("Enter a complete Preprod shielded address for each recipient.");
   }
 }

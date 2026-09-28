@@ -32,8 +32,24 @@ export async function openNetwork(api: ConnectedAPI, password: string) {
   const config = await api.getConfiguration();
   if (config.networkId !== "preprod") throw new Error("Switch your wallet to Preprod.");
   setNetworkId("preprod");
-  const { shieldedAddress } = await api.getShieldedAddresses();
-  const own = decodeRecipient(shieldedAddress);
+  const addressesResult = await api.getShieldedAddresses();
+  let shieldedAddress = "";
+  if (Array.isArray(addressesResult)) {
+    shieldedAddress = typeof addressesResult[0] === "string" ? addressesResult[0] : (addressesResult[0] as any)?.shieldedAddress;
+  } else if (typeof addressesResult === "string") {
+    shieldedAddress = addressesResult;
+  } else if (addressesResult) {
+    shieldedAddress = (addressesResult as any).shieldedAddress;
+  }
+  if (!shieldedAddress || typeof shieldedAddress !== "string") {
+    throw new Error(`Wallet did not return a valid shielded address string. Got: ${JSON.stringify(addressesResult)}`);
+  }
+  let own;
+  try {
+    own = decodeRecipient(shieldedAddress);
+  } catch (err) {
+    throw new Error(`Invalid wallet address format: ${shieldedAddress}. Are you on the Preprod network?`);
+  }
   const storage = levelPrivateStateProvider<string, PayrollPrivateState>({
     midnightDbName: "nocturne-preprod-v1", accountId: shieldedAddress,
     privateStoragePasswordProvider: () => password,
@@ -42,7 +58,7 @@ export async function openNetwork(api: ConnectedAPI, password: string) {
     "https://indexer.preprod.midnight.network/api/v4/graphql",
     "wss://indexer.preprod.midnight.network/api/v4/graphql/ws", window.WebSocket);
   async function providers<K extends string>(name: string): Promise<MidnightProviders<K, string, PayrollPrivateState>> {
-    const zkConfigProvider = new FetchZkConfigProvider<K>(new URL(`/contracts/${name}`, window.location.origin).href);
+    const zkConfigProvider = new FetchZkConfigProvider<K>(new URL(`/contracts/${name}`, window.location.origin).href, window.fetch.bind(window));
     const provingProvider = await api.getProvingProvider(zkConfigProvider);
     return {
       privateStateProvider: storage, publicDataProvider, zkConfigProvider,
@@ -78,9 +94,11 @@ export async function openNetwork(api: ConnectedAPI, password: string) {
       return { contractAddress: result.deployTxData.public.contractAddress, txId: result.deployTxData.public.txId };
     },
     async deployDemoToken() {
+      console.log("deployDemoToken: starting deployContract");
       const result = await deployContract(tokenProviders, {
         compiledContract: demoToken, privateStateId: stateId, initialPrivateState: emptyState(),
       });
+      console.log("deployDemoToken: deployContract finished. Address:", result.deployTxData.public.contractAddress);
       return result.deployTxData.public.contractAddress;
     },
     async mintDemoToken(address: string) {

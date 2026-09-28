@@ -27,11 +27,15 @@ export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<
     if (guard.current) return;
     guard.current = true;
     setBusy(true); onBusy(true); setError(""); setStatus(label);
-    try { await fn(); }
-    catch (e) {
+    console.log(`Starting action: ${label}`);
+    try { 
+      await fn(); 
+      console.log(`Finished action: ${label}`);
+    } catch (e) {
+      console.error("Action caught error:", e);
       // Wallet and prover errors can embed private inputs. Only show our own safe messages.
       const message = e instanceof Error ? e.message : "";
-      setError(/^(Enter a |Restore your |This batch |The connected wallet |Payroll contract |Switch your |Select a |Payments must |Use two |Each amount |Amounts must)/.test(message)
+      setError(/^(Wallet |Invalid |Enter a |Restore your |This batch |The connected wallet |Payroll contract |Switch your |Select a |Payments must |Use two |Each amount |Amounts must)/.test(message)
         ? message : "The operation did not complete. Check the storage password, wallet approval, DUST balance and local proof server. If a payment was submitted, check the same batch before retrying.");
       setStatus("");
     } finally { guard.current = false; setBusy(false); onBusy(false); }
