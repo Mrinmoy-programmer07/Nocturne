@@ -17,7 +17,7 @@ export function WalletConnect({ wallet, disabled = false }: { wallet: ReturnType
           disabled={wallet.busy || disabled}
           onClick={wallet.connect}
         >
-          <Wallet size={15} /> {wallet.busy ? "Connecting…" : "Connect wallet"}
+          <Wallet size={15} /> {wallet.busy ? "Connecting…" : "Connect 1AM"}
         </button>
       )}
       {wallet.error && (

@@ -3,6 +3,7 @@ import type { ConnectedAPI } from "@midnight-ntwrk/dapp-connector-api";
 
 export function useMidnight() {
   const [address, setAddress] = useState("");
+  const [shieldedAddress, setShieldedAddress] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const api = useRef<ConnectedAPI | null>(null);
@@ -15,31 +16,35 @@ export function useMidnight() {
     setError("");
     try {
       const wallets = Object.values(window.midnight ?? {});
-      const wallet =
-        wallets.find(
-          (w) => /lace/i.test(w.name) && w.apiVersion?.startsWith("4."),
-        ) ?? wallets.find((w) => w.apiVersion?.startsWith("4."));
+      const wallet = wallets.find(
+        (w) => /1\s*am/i.test(w.name) && w.apiVersion?.startsWith("4."),
+      );
       if (!wallet)
         throw new Error(
-          "Install a Midnight wallet with DApp Connector v4 support, unlock it, then retry.",
+          "Install and unlock 1AM Wallet with DApp Connector v4 support, then retry.",
         );
       const connected = await wallet.connect("preprod");
       const config = await connected.getConfiguration();
       if (config.networkId !== "preprod")
         throw new Error("Switch your wallet to Preprod, then reconnect.");
-      const addresses = await connected.getShieldedAddresses();
+      const [addresses, unshielded] = await Promise.all([
+        connected.getShieldedAddresses(),
+        connected.getUnshieldedAddress(),
+      ]);
       if (id === request.current) {
         api.current = connected;
-        setAddress(addresses.shieldedAddress);
+        setAddress(unshielded.unshieldedAddress);
+        setShieldedAddress(addresses.shieldedAddress);
       }
     } catch (e) {
       if (id === request.current) {
         api.current = null;
         setAddress("");
+        setShieldedAddress("");
         // Do not echo opaque wallet errors, which may carry private payloads.
         setError(
           e instanceof Error &&
-            /Install a Midnight|Switch your wallet/.test(e.message)
+            /Install and unlock 1AM|Switch your wallet/.test(e.message)
             ? e.message
             : "Wallet connection was declined or unavailable. Unlock your wallet and try again.",
         );
@@ -53,11 +58,12 @@ export function useMidnight() {
     request.current++;
     api.current = null;
     setAddress("");
+    setShieldedAddress("");
     setError("");
     setBusy(false);
     // Connector v4 has no revoke method. Remove site permission inside wallet
     // settings to revoke the wallet's remembered authorization as well.
   }
 
-  return { address, busy, error, connect, disconnect, api };
+  return { address, shieldedAddress, busy, error, connect, disconnect, api };
 }

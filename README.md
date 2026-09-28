@@ -10,7 +10,7 @@
 
 Public demo: [nocturne-tau-steel.vercel.app](https://nocturne-tau-steel.vercel.app)
 
-The **Payroll** view executes the compiled circuit with synthetic coins and clearly marks receipts as unsettled. **Preprod payments** connects a DApp Connector v4 wallet, stores employer state encrypted in IndexedDB, obtains proving through the wallet, balances and submits transactions through the wallet, and shows settlement only after indexer confirmation.
+The **Payroll** view executes the compiled circuit with synthetic coins and clearly marks receipts as unsettled. **Preprod payments** connects 1AM Wallet through DApp Connector v4, stores employer state encrypted in IndexedDB, obtains proving through 1AM, balances and submits transactions through the wallet, and shows settlement only after indexer confirmation.
 
 ## Contract Address
 
@@ -53,7 +53,7 @@ Version choices follow the [Midnight compatibility matrix](https://docs.midnight
 
 - Node.js 22 or newer and npm.
 - The official Compact CLI and toolchain 0.31.1. On Windows, install these inside WSL Ubuntu. Windows' built-in `compact.exe` is unrelated to Midnight.
-- A v4-compatible Midnight wallet on Preprod to exercise wallet connection. No wallet is needed for the local circuit sandbox.
+- 1AM Wallet with DApp Connector v4 on Preprod to exercise wallet connection. No wallet is needed for the local circuit sandbox.
 - A funded Preprod wallet with DUST is required for network settlement. The included demo-token contract can mint a one-time test supply with no monetary value.
 
 ## Setup & Run Locally
@@ -76,7 +76,7 @@ wsl -d Ubuntu -- bash -lc "compact update 0.31.1 --no-set-default"
 
 `npm run compile` automatically uses WSL on Windows. On Linux/macOS it invokes `compact` directly. The compiler emits `managed/payroll/contract`, `zkir`, and `keys`. Generated artifacts are ignored by Git and regenerated in CI. `npm run compile:fast` skips proving-key generation for iteration only; it is not the release check.
 
-For a CLI Preprod deployment, start proof server 8.1.0 on port 6300, fund the generated address with test NIGHT, then run `npm run deploy:preprod`. The ignored `.private/` directory holds the deployment wallet and resulting public addresses. Never commit or share its wallet file.
+Preprod deployment runs from the **Preprod payments** view in the live app. Connect 1AM, confirm the displayed unshielded deployment account, unlock encrypted storage, then deploy and mint the demo asset before deploying payroll. 1AM supplies the configured prover and asks for transaction approval. The resulting contract address is created by the network and differs from the wallet address.
 
 ```sh
 npm run build

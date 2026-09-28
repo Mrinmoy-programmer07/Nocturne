@@ -37,7 +37,7 @@ export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<
   }
 
   return <section className="network-workspace" aria-label="Preprod payments">
-    <div className="notice"><LockKeyhole size={18} /><p><strong>Preprod payments</strong> · Uses test assets and DUST. Proof generation follows your connected wallet's provider. Network settlement still needs end-to-end verification for this release.</p></div>
+    <div className="notice"><LockKeyhole size={18} /><p><strong>Preprod payments with 1AM</strong> · Uses test assets and DUST. Contract deployment, proving, balancing and submission require approval from your connected 1AM account.</p></div>
     <div className="network-grid">
       <section className="panel network-panel">
         <div className="panel-heading"><div><span className="section-label">01 / EMPLOYER ACCESS</span><h2>{unlocked ? "Workspace unlocked" : "Unlock private storage"}</h2></div><LockKeyhole size={22} /></div>
@@ -51,7 +51,8 @@ export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<
           <input id="storage-password" type="password" autoComplete="off" value={password} onChange={e => setPassword(e.target.value)} required minLength={16} />
           <p className="field-hint">At least 16 characters with three character types: uppercase, lowercase, numbers or symbols. Avoid repeated or sequential characters. Keep this password to restore your backup.</p>
           <button className="button primary" disabled={busy || !wallet.address}>Unlock storage <ArrowRight size={16} /></button>
-          {!wallet.address && <p className="field-hint">Connect a Preprod wallet using the button above.</p>}
+          {!wallet.address && <p className="field-hint">Connect your Preprod 1AM Wallet using the button above.</p>}
+          {wallet.address ? <p className="field-hint hash">Deployment account: {wallet.address}</p> : null}
         </form> : <>
           <p className="field-hint">Employer keys are encrypted in this browser. Save a backup after creating a contract. Clearing browser storage without a backup loses access.</p>
           <div className="network-actions">
