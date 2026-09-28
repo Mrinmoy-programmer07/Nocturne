@@ -5,6 +5,10 @@ for (const [name, circuit] of [["payroll", "pay"], ["demo-token", "mint"]]) {
   for (const [folder, extension] of [["keys", "prover"], ["keys", "verifier"], ["zkir", "bzkir"]]) {
     const destination = `public/contracts/${name}/${folder}`;
     await mkdir(destination, { recursive: true });
-    await copyFile(`managed/${name}/${folder}/${circuit}.${extension}`, `${destination}/${circuit}.${extension}`);
+    try {
+      await copyFile(`managed/${name}/${folder}/${circuit}.${extension}`, `${destination}/${circuit}.${extension}`);
+    } catch (e) {
+      if (e.code !== "ENOENT") throw e;
+    }
   }
 }

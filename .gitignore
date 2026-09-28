@@ -11,5 +11,4 @@ coverage/
 .vercel/
 test-results/
 
-public/contracts/
 .private/
