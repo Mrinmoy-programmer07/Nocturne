@@ -4,6 +4,7 @@ import type { NetworkSession, NetworkReceipt } from "../lib/network";
 import { randomBytes, toHex } from "../lib/payroll";
 import { downloadJson } from "../lib/download";
 import { ArrowRight, LockKeyhole, ArrowDownToLine, Eye, EyeOff } from "lucide-react";
+import { validatePassword } from "@midnight-ntwrk/midnight-js-utils";
 
 export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<typeof useMidnight>; onBusy: (busy: boolean) => void }) {
   const session = useRef<NetworkSession | null>(null);
@@ -41,8 +42,10 @@ export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<
     <div className="network-grid">
       <section className="panel network-panel">
         <div className="panel-heading"><div><span className="section-label">01 / EMPLOYER ACCESS</span><h2>{unlocked ? "Workspace unlocked" : "Unlock private storage"}</h2></div><LockKeyhole size={22} /></div>
-        {!unlocked ? <form onSubmit={e => { e.preventDefault(); void action("Opening encrypted storage...", async () => {
+        {!unlocked ? <form noValidate onSubmit={e => { e.preventDefault(); void action("Opening encrypted storage...", async () => {
           if (!wallet.api.current) throw new Error("Enter a wallet connection before unlocking storage.");
+          try { validatePassword(password); }
+          catch { throw new Error("Enter a storage password with at least 16 characters, three character types, and no repeated or sequential pattern."); }
           const { openNetwork } = await import("../lib/network");
           session.current = await openNetwork(wallet.api.current, password);
           setPassword(""); setUnlocked(true); setStatus("Encrypted storage is ready. Create a contract or restore your backup.");
@@ -50,9 +53,11 @@ export default function NetworkPayroll({ wallet, onBusy }: { wallet: ReturnType<
           <label htmlFor="storage-password">Storage password</label>
           <input id="storage-password" type="password" autoComplete="off" value={password} onChange={e => setPassword(e.target.value)} required minLength={16} />
           <p className="field-hint">At least 16 characters with three character types: uppercase, lowercase, numbers or symbols. Avoid repeated or sequential characters. Keep this password to restore your backup.</p>
-          <button className="button primary" disabled={busy || !wallet.address}>Unlock storage <ArrowRight size={16} /></button>
+          <button className="button primary" type="submit" disabled={busy || !wallet.address}>Unlock storage <ArrowRight size={16} /></button>
           {!wallet.address && <p className="field-hint">Connect your Preprod 1AM Wallet using the button above.</p>}
           {wallet.address ? <p className="field-hint hash">Deployment account: {wallet.address}</p> : null}
+          {status ? <p className="field-hint" role="status">{status}</p> : null}
+          {error ? <p className="wallet-error" role="alert">{error}</p> : null}
         </form> : <>
           <p className="field-hint">Employer keys are encrypted in this browser. Save a backup after creating a contract. Clearing browser storage without a backup loses access.</p>
           <div className="network-actions">
