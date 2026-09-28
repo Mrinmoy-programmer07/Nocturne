@@ -1,0 +1,47 @@
+name: Compile and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Install pinned Compact toolchain
+        shell: bash
+        run: |
+          curl --proto '=https' --tlsv1.2 -LsSf https://github.com/midnightntwrk/compact/releases/download/compact-v0.5.2/compact-installer.sh -o /tmp/compact-installer.sh
+          sh /tmp/compact-installer.sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/compact" update 0.31.1 --no-set-default
+      - name: Compile contract and generate proving keys
+        run: npm run compile
+      - name: Confirm proving artifacts exist
+        run: test -s managed/payroll/keys/pay.prover && test -s managed/payroll/keys/pay.verifier
+      - name: Run contract and application tests
+        run: npm test -- --reporter=verbose
+      - name: Typecheck and build frontend
+        run: npm run build
+      - name: Upload build for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: nocturne-frontend
+          path: dist/
+          retention-days: 7
