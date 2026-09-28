@@ -44,7 +44,7 @@ export async function openNetwork(api: ConnectedAPI, password: string) {
   if (!shieldedAddress || typeof shieldedAddress !== "string") {
     throw new Error(`Wallet did not return a valid shielded address string. Got: ${JSON.stringify(addressesResult)}`);
   }
-  let own;
+  let own: { coinKey: string; encryptionKey: string };
   try {
     own = decodeRecipient(shieldedAddress);
   } catch (err) {
