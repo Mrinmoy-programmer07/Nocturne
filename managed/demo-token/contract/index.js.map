@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../",
+  "sources": ["contracts/demo-token.compact", "compiler/standard-library.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EASA;;;;;;;;;;;;;MAKA,AAAA,IAWC;;;;;;;;;;;;;;;;;;;;;;OAAA;;;;GAbA;EAHD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IALA;;;;;;;;;yEAA+B;IAC/B;;;;;;;;;yEAA+B;IAC/B;;;;;;;;;yEAA8B;UAI5B,KAAK;;IAAL;;;;;;;2HAAA,KAAK;;yEAAA;IACL;;;;;;;;;yEAAM;;;;;;;GACP;ECyBD,AAAA,QAA0B;kCACkB;;EAkF5C,AAAA,aAAyB,cAAuB;qCACC,cAAY;;;EAG7D,AAAA;;uBACE;uBACA;uBACA;uBACA;;UAEM,kBAAiC;;yCAAwB;iEAAY;;;;;;;;;;;;4BAAuB;IAClG;;;;;;;;;;;2HAAoB;;;;;;4HAAY;;;;;;;;;;;;;yDACd,QAAM;UAClB,8BAAoB,QAAM;IAChC;;;;;;;;;;;2HAA2B;;;;;;SAEtB;;sBAAqB;8CAAyB;;;;;;;;;;;;;MACjD;;;;;;;;;;;6HAA6B;;;;;;;WAExB;;EAgHT,AAAA,kBACE,QACA;;;0CAKU;8CACI;;sCACJ;sCAAoB;sCAAuB;;EApQvD,AAAA,kBAAA;oEAAA;;;EAAA,AAAA,kBAAA;oEAAA;;;EAAA,AAAA,oBAAA,SAAA;;uDAAA;uDAAA;;;EAAA,AAAA;;;;;;;;EAAA,AAAA,gDAAA,QAAA;;wDAAA;wDAAA;;;;;;;EDOA,AAAA,eAAkC;;0DAAlC,YAAkC;;;;;;;;;;;;;;GAAA;EAOlC,AAAA,OAWC;;;kEAVqD;;;;;;;;;;;uIAAK;;qDACjD;;;;;;;;;;;0HAAM;;UACR,MAKL;;;;;;;UACD,KAAK,GAAY,MAAI;IAArB;;;;;;;2HAAA,KAAK;;yEAAA;IACL;;;;;;;;;yEAAM;;GACP;;;;;;;;;;;;;;;;;;;;;;;;IArBD;qCAAA;;;;;;;;;;;0GAA+B;KAAA;IAC/B;qCAAA;;;;;;;;;;;0GAA+B;KAAA;IAC/B;qCAAA;;;;;;;;;;;0GAA8B;KAAA;;;;;;;;;;"
+}

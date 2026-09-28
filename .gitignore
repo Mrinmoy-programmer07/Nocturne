@@ -1,6 +1,5 @@
 node_modules/
 dist/
-managed/
 tmp/
 .env
 .env.*
@@ -11,4 +10,5 @@ coverage/
 .vercel/
 test-results/
 
+public/contracts/
 .private/
