@@ -2,6 +2,8 @@
 
 Record this after a funded Preprod transaction and two-recipient delivery check are complete. Do not substitute the local sandbox for network confirmation.
 
+The repository includes a [one-minute project walkthrough](evidence/nocturne-demo.webm) of the live UI, local circuit, observer view, Preprod workspace, tests and repository. It deliberately does not show or claim a funded network payment.
+
 | Time | Action |
 | --- | --- |
 | 0-8s | Show Nocturne, the Preprod contract address and connect the employer wallet. |

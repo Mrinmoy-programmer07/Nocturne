@@ -25,7 +25,8 @@
 - [x] Record passing GitHub Actions runs and add the real CI badge.
 - [x] Publish and browser-check the [live demo](https://nocturne-tau-steel.vercel.app).
 - [x] Capture local test output evidence: [screenshot](evidence/test-output.png) and [log](evidence/tests.txt).
-- [ ] Record the one-minute end-to-end network demo after integration.
+- [x] Record a [one-minute project walkthrough](evidence/nocturne-demo.webm).
+- [ ] Replace or supplement it with a funded end-to-end network recording after recipient verification.
 - [ ] Owner reviews and submits PROPOSAL.md; organizer approves it.
 - [x] Accumulate at least 10 meaningful commits.
 

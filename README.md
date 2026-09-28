@@ -115,6 +115,7 @@ See [PROPOSAL.md](PROPOSAL.md), drafted for **Private Payroll / Splits** using t
 - [Public observer](docs/evidence/observer.png)
 - [Preprod workspace](docs/evidence/preprod.png)
 - [Test output screenshot](docs/evidence/test-output.png), rendered from the [actual captured test log](docs/evidence/tests.txt)
+- [One-minute walkthrough](docs/evidence/nocturne-demo.webm), showing the live sandbox, public observer, Preprod workspace, passing tests and repository. It does not claim funded settlement.
 - [Verification report and remaining limitations](docs/VERIFICATION.md)
 
 ## Source References
