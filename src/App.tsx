@@ -169,7 +169,7 @@ export default function App() {
         <div className="sidebar-bottom">
           <span className="avatar">N</span>
           <div>
-            Nocturne workspace<small>Level 3 · Local prototype</small>
+            Nocturne workspace<small>Local sandbox + Preprod</small>
           </div>
         </div>
       </aside>
@@ -553,7 +553,7 @@ export default function App() {
             <span>
               <Moon size={14} /> Nocturne / Private Payroll & Splits
             </span>
-            <span>Built on Midnight · Level 3 foundation</span>
+            <span>Built on Midnight · Level 3 submission build</span>
           </footer>
         </main>
       </div>
