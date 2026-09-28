@@ -9,26 +9,32 @@
  ✓ tests/validation.test.ts > rejects invalid amount " 1" 0ms
  ✓ tests/validation.test.ts > rejects invalid amount "01" 0ms
  ✓ tests/validation.test.ts > rejects invalid amount "NaN" 0ms
- ✓ tests/validation.test.ts > preserves precision above JavaScript safe integer range 0ms
- ✓ tests/validation.test.ts > rejects malformed keys and case-insensitive duplicates 0ms
+ ✓ tests/validation.test.ts > preserves precision above JavaScript safe integer range 1ms
+ ✓ tests/validation.test.ts > rejects malformed keys and case-insensitive duplicates 1ms
  ✓ tests/validation.test.ts > adds two 64-bit amounts in a wider range 0ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > initializes the public owner and asset without exposing the secret 31ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > executes an exactly funded split and records a public batch 42ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects duplicate batch IDs 43ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > keeps ledger history but isolates each batch's local outputs 47ms
+ ✓ tests/network-input.test.ts > network receipt boundaries > accepts exactly 32-byte hexadecimal identifiers 2ms
+ ✓ tests/network-input.test.ts > network receipt boundaries > creates a settled receipt only after full confirmation 1ms
+ ✓ tests/demo-token.test.ts > compiled demo-token circuit > mints its fixed demo supply once 52ms
+ ✓ tests/demo-token.test.ts > compiled demo-token circuit > rejects an unauthorized issuer 8ms
+ ✓ tests/demo-token.test.ts > compiled demo-token circuit > rejects a second mint 17ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > initializes the public owner and asset without exposing the secret 40ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > executes an exactly funded split and records a public batch 46ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects duplicate batch IDs 33ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > keeps ledger history but isolates each batch's local outputs 48ms
  ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects an unauthorized employer 6ms
  ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects mismatched funding of 999n 8ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects mismatched funding of 1001n 7ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects a different token 8ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects mismatched funding of 1001n 8ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects a different token 7ms
  ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects zero payments 8ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects duplicate recipients 8ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > exposes only the documented ledger schema and empty circuit return 23ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > exports a receipt without private amounts, keys, coin or secret 24ms
- ✓ tests/payroll.test.ts > compiled Compact payroll circuit > excludes raw witness values from public transcript operations 27ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > rejects duplicate recipients 10ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > exposes only the documented ledger schema and empty circuit return 24ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > exports a receipt without private amounts, keys, coin or secret 28ms
+ ✓ tests/payroll.test.ts > compiled Compact payroll circuit > excludes raw witness values from public transcript operations 42ms
 
- Test Files  2 passed (2)
-      Tests  24 passed (24)
-   Start at  10:01:34
-   Duration  486ms (tests 68%, transform 20%, import 10%, worker 2%)
+ Test Files  4 passed (4)
+      Tests  29 passed (29)
+   Start at  14:28:10
+   Duration  566ms (tests 48%, transform 30%, import 19%, worker 2%)
 
 Sourcemap for "C:/Users/DELL/Desktop/Full Moon/New folder/managed/payroll/contract/index.js" points to missing source files
+Sourcemap for "C:/Users/DELL/Desktop/Full Moon/New folder/managed/demo-token/contract/index.js" points to missing source files

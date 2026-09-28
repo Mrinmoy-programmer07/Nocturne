@@ -4,7 +4,7 @@ Selected idea: **Private Payroll / Splits: distribute funds without exposing amo
 
 Product name: **Nocturne**
 
-Status: Draft for the project owner to review and submit. Not submitted or approved.
+Status: Implementation-ready proposal. External submission and organizer approval are not yet recorded.
 
 ## What is the product, and who uses it?
 
@@ -37,9 +37,9 @@ Nocturne uses `receiveShielded` and two `sendImmediateShielded` calls. A random 
 
 ## Mainnet Feasibility
 
-The bounded two-recipient MVP is technically realistic as a development target, but mainnet readiness is not established. The current foundation compiles with Compact 0.31.1 and executes the generated contract locally. The frontend runs synthetic coins, not live money.
+The bounded two-recipient MVP is technically realistic, but mainnet readiness is not established. The project compiles with Compact 0.31.1, executes generated circuits locally, and includes a wallet-backed Preprod deployment and payment path.
 
-Before a Preprod release, implement real funding, wallet provider wiring, recipient ciphertext delivery, proof generation, transaction submission, confirmation and rejection handling. Verify both recipients can discover and spend their outputs. A contract-generated output alone does not establish wallet receipt.
+Before treating the Preprod flow as verified, fund an employer wallet with NIGHT/DUST, deploy the demo asset and payroll contracts, submit a split, and confirm both recipient wallets discover and can spend their encrypted outputs. The UI includes these operations but the repository does not claim they have completed without transaction evidence.
 
 Before any mainnet use, obtain a security review, test the complete payment flow on the target network, choose a suitable shielded asset, add secure secret backup and recovery, assess prover privacy, and plan how growing batch state will be managed. Keep local circuit tests distinct from proof verification and chain settlement.
 

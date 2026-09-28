@@ -8,6 +8,8 @@
 6. Open **Public observer** to inspect the batch ID and local result without displaying amounts. This view is not a separate security boundary.
 7. **Export public receipts** downloads only the allowlisted public projection. **Clear session** clears local history/private runtime state and restores sample inputs. Refreshing also resets the session.
 
-Wallet connection is optional and independent of circuit execution. Install a compatible Midnight wallet, unlock it, set Preprod, then click **Connect wallet**. The app checks the returned network and shows a shortened shielded address. **Disconnect** clears the app's handle; revoke remembered site permission in the wallet settings if desired. Wallet signing and payment submission are not implemented yet.
+Wallet connection is optional for the sandbox. For Preprod, install a DApp Connector v4 wallet, select Preprod, connect, then open **Preprod payments**. Unlock encrypted browser storage with a strong password, create or enter a test shielded asset, deploy payroll, enter two complete shielded recipient addresses, and submit the split. Export an encrypted key backup after deployment. A receipt is marked settled only after the indexer reports full success.
 
-No private values are written to localStorage, a backend, or downloaded receipts. They are still accessible in the browser's memory to the person controlling that browser. Do not enter actual payroll data, seed phrases or real employer secrets.
+Preprod needs a funded wallet with DUST. The demo-token path creates 1,000,000 test units with no monetary value. Use synthetic recipient wallets and verify both wallets discover the encrypted output before claiming end-to-end completion.
+
+No private values are written to localStorage or a backend. Network employer state is encrypted in IndexedDB; exported backups remain encrypted. Public receipts never contain salaries or recipient keys. Do not enter seed phrases or real payroll data.

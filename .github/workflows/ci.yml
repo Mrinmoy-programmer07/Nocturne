@@ -34,7 +34,11 @@ jobs:
       - name: Compile contract and generate proving keys
         run: npm run compile
       - name: Confirm proving artifacts exist
-        run: test -s managed/payroll/keys/pay.prover && test -s managed/payroll/keys/pay.verifier
+        run: |
+          test -s managed/payroll/keys/pay.prover
+          test -s managed/payroll/keys/pay.verifier
+          test -s managed/demo-token/keys/mint.prover
+          test -s managed/demo-token/keys/mint.verifier
       - name: Run contract and application tests
         run: npm test -- --reporter=verbose
       - name: Typecheck and build frontend

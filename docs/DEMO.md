@@ -1,6 +1,6 @@
 # One-minute submission demo
 
-Record this only after the pending network integration and deployment are complete.
+Record this after a funded Preprod transaction and two-recipient delivery check are complete. Do not substitute the local sandbox for network confirmation.
 
 | Time | Action |
 | --- | --- |
